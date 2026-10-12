@@ -147,6 +147,10 @@ void inserirElemento()
 	int valor;
 	cout << "Digite o elemento: ";
 	cin >> valor;
+	if (posicaoElemento(valor) != NULL) {
+		cout << "Elemento já existe na lista. \n";
+		return;
+	}
 
 	// -----------------------------------------------------------------
 	// TAREFA 1: antes de alocar memória, verifique se 'valor' já existe
@@ -183,8 +187,41 @@ void inserirElemento()
 }
 
 void excluirElemento()
-{
-	// -----------------------------------------------------------------
+	{
+		int valor;
+		cout << "Digite o número que quer excluir: ";
+		cin >> valor;
+
+		if (posicaoElemento(valor) == NULL) {
+			cout << "ELEMENTO NAO ENCONTRADO\n";
+			return;
+		}
+
+		if (primeiro->valor == valor) {
+			NO* paraExcluir = primeiro;
+			primeiro = primeiro->prox;
+			free(paraExcluir);
+			return;
+		}
+
+		NO* anterior = NULL;
+		NO* atual = primeiro;
+
+		while (atual != NULL && atual->valor != valor) {
+			anterior = atual;
+			atual = atual->prox;
+		}
+
+		if (atual != NULL) {
+			anterior->prox = atual->prox;
+			free(atual);       
+		}
+	}
+
+
+
+
+		// -----------------------------------------------------------------
 	// TAREFA 3
 	// 1. Peça o número e use posicaoElemento() para saber se ele existe.
 	//    Se não existir, exiba "ELEMENTO NAO ENCONTRADO" e saia.
@@ -196,10 +233,25 @@ void excluirElemento()
 	// Lembre-se: todo nó removido precisa de free(), e um nó liberado
 	// nunca mais deve ser usado.
 	// -----------------------------------------------------------------
-}
+
 
 void buscarElemento()
 {
+	int valor;
+	cout << "Digite o elemento que você quer buscar: ";
+	cin >> valor;
+
+	if (posicaoElemento(valor) != NULL) {
+		cout << "ENCONTRADO\n";
+	}
+	else {
+		cout << "ELEMENTO NAO ENCONTRADO\n";
+	}
+}
+
+
+
+
 	// -----------------------------------------------------------------
 	// TAREFA 2
 	// 1. Peça ao usuário o número a ser buscado.
@@ -207,7 +259,7 @@ void buscarElemento()
 	// 3. Retorno diferente de NULL -> exiba "ENCONTRADO"
 	//    Retorno igual a NULL     -> exiba "ELEMENTO NAO ENCONTRADO"
 	// -----------------------------------------------------------------
-}
+
 
 
 
